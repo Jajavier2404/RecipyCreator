@@ -1,0 +1,7 @@
+/* Importación de la fuente Baloo Bhaijaan desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
+
+/* Clase de utilidad para aplicar la fuente */
+.font-baloo {
+  font-family: 'Baloo Bhaijaan 2', cursive;
+}
