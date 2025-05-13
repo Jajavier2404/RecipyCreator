@@ -3,6 +3,7 @@ import api from "../services/api";
 import { FaSearch } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import Chef from '../assets/chefcito.png';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -112,14 +113,16 @@ export default function Home() {
                         </button>
                         {/* Aquí podrías agregar más elementos del formulario si los necesitas */}
                     </form>
-
-                    <h2 className="font-moodcake text-center text-4xl md:text-2xl text-[#A63D40] mb-5 text-shadow ml-6">
-                        Dime que ingredientes tienes,
-                        <br/>
-                        y te mostrare una receta deliciosa
-                        <br/>                      
-                        👨‍🍳
-                    </h2>
+                    <div>
+                        <img src={Chef} alt="Chef" className="w-1/2 h-auto ml-6 mt-10" />
+                        <h2 className="font-moodcake text-center text-4xl md:text-2xl text-[#A63D40] mb-5 text-shadow ml-6">
+                            Dime que ingredientes tienes,
+                            <br/>
+                            y te mostrare una receta deliciosa
+                            <br/>                      
+                            👨‍🍳
+                        </h2>
+                    </div>
 
 
                 </div>
