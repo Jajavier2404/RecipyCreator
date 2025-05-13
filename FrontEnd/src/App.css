@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+/* Ensure Moodcake font is available */
+@import "../public/fonts/moodcake.css";

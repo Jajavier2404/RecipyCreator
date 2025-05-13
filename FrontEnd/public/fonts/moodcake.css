@@ -1,0 +1,14 @@
+/* Moodcake Font Definition */
+@font-face {
+  font-family: 'Moodcake';
+  src: url('./Moodcake.otf') format('opentype'),
+       url('./Moodcake.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Make Moodcake available as a utility class */
+.font-moodcake {
+  font-family: 'Moodcake', cursive;
+}

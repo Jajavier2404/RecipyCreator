@@ -1,7 +1,23 @@
+/* Moodcake Font Definition */
+@font-face {
+  font-family: 'Moodcake';
+  src: url('./moodcake.otf') format('opentype'),
+       url('./moodcake.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Make Moodcake available as a utility class */
+.font-moodcake {
+  font-family: 'Moodcake',cursive;
+}
+
+/* Keep Baloo Bhaijaan as fallback if needed */
 /* Importación de la fuente Baloo Bhaijaan desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
 
 /* Clase de utilidad para aplicar la fuente */
 .font-baloo {
-  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-family: 'Moodcake', 'Baloo Bhaijaan 2', cursive;
 }
