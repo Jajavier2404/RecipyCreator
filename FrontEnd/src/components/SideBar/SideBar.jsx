@@ -1,6 +1,6 @@
 import ButtonSB from "./buttonSB";
 import logoImage from "../../assets/logo.png";
-import { FaHome, FaBook, FaStar, FaBars, FaTimes } from 'react-icons/fa';
+import { FaHome, FaBook, FaStar, FaBars, FaTimes,FaLeaf } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -40,16 +40,23 @@ export default function SideBar() {
                 transform transition-transform duration-300 ease-in-out
                 ${isVisible ? 'translate-x-0' : '-translate-x-full'}
             `}>
-                {/* Logo */}
-                <div className="flex justify-center items-center font-moodcake text-3xl mt-13 text-[#F18F01] bg-[#ffd484] rounded-2xl p-3  mb-5">
-                    <h2>Ecorecipe</h2>
+                {/* Header con logo */}
+                <div className="flex flex-col items-center pt-8 pb-6 px-6 border-b border-[#50B88C]/30">
+                    <div className="flex items-center gap-3 font-moodcake text-3xl text-white">
+                        <FaLeaf className="text-[#F18F01] text-2xl" />
+                        <h2 className="bg-gradient-to-r from-[#F18F01] to-[#ffd484] bg-clip-text text-transparent font-bold">Ecorecipe</h2>
+                    </div>
+                    <p className="text-xs text-gray-300 mt-2 font-light">Tu compañero culinario sostenible</p>
                 </div>
 
                 {/* Navegación */}
-                <nav className="flex-1 space-y-4">
-                    <ButtonSB text="Home" icon={<FaHome className="text-xl" />} onClick={handleClickHome} />
-                    <ButtonSB text="Recipys" icon={<FaBook className="text-xl"/>} onClick={handleClickResults}/>
-                    <ButtonSB text="Favorites" icon={<FaStar className="text-xl"/>} onClick={handleClickFavorite}/>
+                <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-[#50B88C]/50">
+                    <div className="mb-6 px-2">
+                        <h3 className="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-3">Navegación principal</h3>
+                        <ButtonSB text="Home" icon={<FaHome className="text-xl" />} onClick={handleClickHome} />
+                        <ButtonSB text="Recipys" icon={<FaBook className="text-xl"/>} onClick={handleClickResults}/>
+                        <ButtonSB text="Favorites" icon={<FaStar className="text-xl"/>} onClick={handleClickFavorite}/>
+                    </div>
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-[#50B88C]/50 text-center">
