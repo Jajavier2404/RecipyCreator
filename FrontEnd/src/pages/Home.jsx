@@ -4,6 +4,7 @@ import SideBar from '../components/SideBar/SideBar';
 import api from '../services/api';
 import Chef from '../assets/chefcito.png';
 import { FaSearch, FaLeaf, FaClock, FaUtensils } from 'react-icons/fa';
+import ButtonSS from '../components/Sesion/buttonSS';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -60,6 +61,12 @@ const Home = () => {
         }
     };
 
+    const handleClickLogin = async (e) => {
+        navigate('/login');
+    };
+    const handleClickSignUp = async (e) => {
+        navigate('/signUp');
+    };
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Barra lateral responsiva */}
@@ -69,10 +76,16 @@ const Home = () => {
 
             {/* Contenido principal con fondo mejorado */}
             <main className="flex-1 bg-[#FFF4E0] overflow-y-auto">
+                <aside>
+                    <ButtonSS text="Login" onClick={handleClickLogin} />
+                    <ButtonSS text="Sign Up" onClick={handleClickSignUp} />
+                </aside>
                 {/* Hero Section - Con más espacio vertical y horizontal */}
-                <section className="relative min-h-[100vh] flex items-center justify-center px-8 py-20">
+                <section className="relative min-h-[98vh] flex items-center justify-center px-8 py-20">
+                    
                     {/* Contenido principal del hero - Mayor separación entre elementos */}
                     <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
+
                         {/* Texto principal y formulario - Aumentado espaciado */}
                         <div className="flex-1 max-w-xl">
                             <div className="mb-12">
@@ -123,6 +136,7 @@ const Home = () => {
 
                         {/* Chef Illustration - Más espacio para la ilustración */}
                         <div className="flex-1 flex flex-col items-center justify-center mt-8 md:mt-0 relative">
+                            
                             {/* Nuevo diseño del diálogo - Más moderno y visualmente atractivo */}
                             {/* Globo de texto reposicionado */}
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 z-10 mb-8">
@@ -164,13 +178,12 @@ const Home = () => {
                                     <span className="text-2xl">🍲</span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </section>
 
                 {/* Features Section - Mayor espaciado y padding */}
-                <section className="py-24 px-8 bg-white">
+                <section className="py-24 px-8 bg-white shadow-[0_0_3px_0.2px] shadow-[#e5d4b3]">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-16">Why Ecorecipe?</h2>
 
@@ -192,7 +205,7 @@ const Home = () => {
                 </section>
 
                 {/* Popular Recipes Section - Mayor espaciado y padding */}
-                <section className="py-24 px-8 bg-[#FFF4E0]">
+                <section className="py-24 px-8 bg-[#FFF4E0]shadow-[0_0_10px_0]">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-4">Popular Recipes</h2>
                         <p className="text-center text-xl text-[#295F4E]/80 mb-16 max-w-2xl mx-auto">
