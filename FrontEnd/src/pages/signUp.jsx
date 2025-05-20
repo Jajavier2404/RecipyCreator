@@ -33,6 +33,7 @@ const SignUp = () => {
         }
     };
 
+    //validacion de que todos los campos esten correctamente dijitados
     const validateForm = () => {
         const newErrors = {};
         
@@ -111,7 +112,7 @@ const SignUp = () => {
     return (
         <div className="min-h-screen flex bg-[#FFF4E0] relative overflow-hidden">
         {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-[#dbb781] rounded-l-[100px] z-0"></div>
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-[#e6b060] rounded-l-[100px] z-0"></div>
         <div className="absolute -bottom-16 left-8 w-40 h-40 bg-[#50B88C]/30 rounded-full blur-xl"></div>
         <div className="absolute top-1/3 right-1/3 w-48 h-48 bg-[#A63D40]/20 rounded-full blur-xl"></div>
         
@@ -235,7 +236,7 @@ const SignUp = () => {
                     <button
                         type="button"
                         onClick={nextStep}
-                        className="w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
+                        className="w-full bg-[#295F4E] hover:bg-[#4c7a6b] cursor-pointer text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
                     >
                         Continue
                     </button>
@@ -251,7 +252,7 @@ const SignUp = () => {
                         onClick={handleGoogleSignUp}
                         className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all"
                     >
-                        <FaGoogle className="text-[#F18F01]" />
+                        <FaGoogle className="text-[#295F4E]" />
                         Sign up with Google
                     </button>
                     </>
@@ -328,7 +329,7 @@ const SignUp = () => {
                         <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
+                        className="w-full bg-[#295F4E] hover:bg-[#295F4E] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
                         >
                         {isLoading ? (
                             <span className="flex items-center justify-center">
@@ -348,7 +349,7 @@ const SignUp = () => {
                 <div className="mt-8 text-center">
                 <p className="text-gray-700">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-[#F18F01] font-medium hover:text-[#E08200]">
+                    <Link to="/login" className="text-[#295F4E] font-medium hover:text-[#45675c]">
                     Log In
                     </Link>
                 </p>

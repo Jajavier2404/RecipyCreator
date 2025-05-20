@@ -5,7 +5,9 @@ import api from '../services/api';
 import Chef from '../assets/chefcito.png';
 import { FaSearch, FaLeaf, FaClock, FaUtensils } from 'react-icons/fa';
 import ButtonSS from '../components/Sesion/buttonSS';
-
+import curry from '../assets/curry.jpg';
+import ommelette from '../assets/ommelete.jpg';
+import pastaP from '../assets/pastaPrimavera.jpg';
 const Home = () => {
     const navigate = useNavigate();
 
@@ -31,9 +33,9 @@ const Home = () => {
         },
     ]);
     const [popularRecipes, setPopularRecipes] = useState([
-        { name: 'Pasta Primavera', time: '25 min', difficulty: 'Easy', img: 'bg-[#F18F01]/20' },
-        { name: 'Vegetable Curry', time: '35 min', difficulty: 'Medium', img: 'bg-[#50B88C]/20' },
-        { name: 'Quick Omelette', time: '15 min', difficulty: 'Easy', img: 'bg-[#A63D40]/20' },
+        { name: 'Pasta Primavera', time: '25 min', difficulty: 'Easy', img: pastaP },
+        { name: 'Vegetable Curry', time: '35 min', difficulty: 'Medium', img: curry },
+        { name: 'Quick Omelette', time: '15 min', difficulty: 'Easy', img: ommelette },
     ]);
 
     // Efecto para la animación inicial
@@ -51,13 +53,13 @@ const Home = () => {
         setIsLoading(true);
         console.log('Ingredientes:', ingredients);
         try {
-        const response = await api.post('/api/process', { ingredients });
-        const recipeData = response.data;
-        console.log('Receta:', recipeData);
-        navigate('/results', { state: { recipeData } });
+            const response = await api.post('/api/process', { ingredients });
+            const respuesta = response.data;
+            console.log('Receta:', respuesta);
+            navigate('/results', { state: { respuesta } });
         } catch (error) {
-        console.error('Error al enviar los ingredientes:', error);
-        setIsLoading(false);
+            console.error('Error al enviar los ingredientes:', error);
+            setIsLoading(false);
         }
     };
 
@@ -123,11 +125,11 @@ const Home = () => {
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            Searching...
+                                            Generando receta...
                                         </span>
                                     ) : (
                                         <span className="flex items-center">
-                                            <FaSearch className="mr-3" /> Find Recipes
+                                            <FaSearch className="mr-3" /> Buscar receta
                                         </span>
                                     )}
                                 </button>
@@ -205,7 +207,7 @@ const Home = () => {
                 </section>
 
                 {/* Popular Recipes Section - Mayor espaciado y padding */}
-                <section className="py-24 px-8 bg-[#FFF4E0]shadow-[0_0_10px_0]">
+                <section className="py-24 px-8 bg-[#FFF4E0]">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-4">Popular Recipes</h2>
                         <p className="text-center text-xl text-[#295F4E]/80 mb-16 max-w-2xl mx-auto">
@@ -218,8 +220,18 @@ const Home = () => {
                                     key={index}
                                     className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-5px]"
                                 >
-                                    <div className={`h-52 ${recipe.img} flex items-center justify-center`}>
-                                        <FaUtensils className="text-6xl text-white/50" />
+                                    <div className="h-52 w-full">
+                                        {typeof recipe.img === 'string' && recipe.img.startsWith('bg-') ? (
+                                            <div className={`h-full w-full ${recipe.img} flex items-center justify-center`}>
+                                                <FaUtensils className="text-6xl text-white/50" />
+                                            </div>
+                                        ) : (
+                                            <img 
+                                                src={recipe.img} 
+                                                alt={recipe.name} 
+                                                className="h-full w-full object-cover"
+                                            />
+                                        )}
                                     </div>
                                     <div className="p-8">
                                         <h3 className="text-2xl font-semibold text-[#295F4E] mb-4">{recipe.name}</h3>

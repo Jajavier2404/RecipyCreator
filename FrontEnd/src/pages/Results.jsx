@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import SideBar from "../components/SideBar/SideBar";
 import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 export default function Results() {
   // Estado para ejemplo de receta generada por IA

@@ -85,10 +85,10 @@ const Login = () => {
             </p>
           </div>
           
-          {/* Right section - Login form */}
+          {/* Seccion Derecha - Login form */}
           <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
             <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-[#295F4E]">Welcome Back</h1>
+              <h1 className="text-3xl font-bold text-[#295F4E]">Bienvenido de Vuelta</h1>
             </div>
             
             {/* Google login button */}
@@ -102,7 +102,7 @@ const Login = () => {
             
             <div className="flex items-center my-6">
               <hr className="flex-1 border-gray-300" />
-              <span className="px-4 text-gray-500 text-sm">OR LOG IN WITH EMAIL</span>
+              <span className="px-4 text-gray-500 text-sm">O LOGEATE CON EMAIL</span>
               <hr className="flex-1 border-gray-300" />
             </div>
             
@@ -130,7 +130,6 @@ const Login = () => {
               <div className="mb-6">
                 <div className="flex justify-between mb-2">
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                  <a href="#" className="text-sm text-[#F18F01] hover:text-[#E08200]">Forgot Password?</a>
                 </div>
                 <input
                   type="password"
@@ -154,7 +153,7 @@ const Login = () => {
                   className="h-4 w-4 text-[#50B88C] border-gray-300 rounded focus:ring-[#50B88C]"
                 />
                 <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
-                  Keep me logged in
+                  Mantener Sesion Iniciada
                 </label>
               </div>
               
@@ -169,7 +168,7 @@ const Login = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Logging in...
+                    Iniciando Sesion...
                   </span>
                 ) : 'Log In'}
               </button>
@@ -177,12 +176,12 @@ const Login = () => {
             
             <div className="mt-8 text-center">
               <p className="text-gray-700">
-                Need help? <span className="text-[#F18F01]">Contact Support</span>
+                Necesitas Ayuda? <span className="text-[#F18F01]">Contacta a Soporte</span>
               </p>
               <p className="mt-4 text-gray-700">
-                Don't have an account?{' '}
+                No tienes Cuenta?{' '}
                 <Link to="/signup" className="text-[#F18F01] font-medium hover:text-[#E08200]">
-                  Register
+                  Registrate
                 </Link>
               </p>
             </div>
