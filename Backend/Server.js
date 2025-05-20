@@ -2,9 +2,11 @@ const dotenv = require('dotenv');
 // Es importante cargar las variables de entorno antes de importar otros módulos
 dotenv.config();
 
-const express = require('express');
+// ✅ Usa require
+const express = require('express'); 
 const cors = require('cors');
 const ingredientRoutes = require('./Routes/ingredientRoutes');
+const authRoutes = require('./Routes/authRouts');
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.use(cors({
 }));
 
 app.use(express.json()); // Para poder procesar JSON en las solicitudes
+app.use('/api/auth', authRoutes); 
 
 // Usamos las rutas definidas
 app.use('/api', ingredientRoutes);
