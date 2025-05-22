@@ -85,9 +85,7 @@ const Home = () => {
             {/* Contenido principal con fondo mejorado */}
             <main className="flex-1 bg-[#FFF4E0] overflow-y-auto">
                 {isLoggedIn&&(
-                    <aside className='fixed top-5 right-10 z-50'>
-                        <UserProfile />
-                    </aside>
+                    <></>
                 )}
                 {!isLoggedIn&&(
                     <aside>

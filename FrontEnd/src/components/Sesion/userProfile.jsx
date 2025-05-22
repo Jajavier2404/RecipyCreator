@@ -41,7 +41,7 @@ const UserProfile = () => {
     return (
         <div className="relative" ref={dropdownRef}> {/* Asigna la ref al contenedor principal */}
             <div
-                className="w-13 h-13 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center cursor-pointer shadow-md transform transition-transform duration-200 hover:scale-105"
+                className="w-15 h-15 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center cursor-pointer shadow-md transform transition-transform duration-200 hover:scale-105"
                 onClick={() => setIsOpen(!isOpen)} // Cambia el estado al hacer clic
             >
                 <span className="text-white font-semibold text-sm">{initials}</span>

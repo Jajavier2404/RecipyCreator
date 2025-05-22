@@ -29,7 +29,7 @@ const generateRecipeAI = async (ingredients) => {
         const jsonRegister = await aiIngredients.chat.completions.create({
             model: 'gpt-4o-mini', 
             messages: messages,
-            response_format: 'json', 
+            response_format: { type: 'json_object' }, 
         });
 
         // Procesamos la respuesta de OpenAI
