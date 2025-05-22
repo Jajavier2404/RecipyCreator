@@ -1,0 +1,133 @@
+📦 ANÁLISIS COMPLETO DE DEPENDENCIAS - RECIPYCREATOR
+=========================================================
+
+ESTRUCTURA DEL PROYECTO: Full-Stack (Backend Node.js + Frontend React)
+
+=========================================================
+🔧 BACKEND (Node.js/Express)
+=========================================================
+
+DEPENDENCIAS DE PRODUCCIÓN:
+---------------------------
+• @prisma/client@^6.8.2    - Cliente de base de datos ORM
+• bcrypt@^6.0.0           - Encriptación de contraseñas
+• cors@^2.8.5             - Manejo de CORS (Cross-Origin Resource Sharing)
+• dotenv@^16.5.0          - Carga variables de entorno desde archivo .env
+• express@^5.1.0          - Framework web para Node.js
+• jsonwebtoken@^9.0.2     - Generación y verificación de tokens JWT
+• openai@^4.100.0         - Cliente oficial de OpenAI API
+• prisma@^6.8.2           - ORM y herramientas de base de datos
+
+COMANDOS INDIVIDUALES BACKEND:
+-----------------------------
+npm install @prisma/client@^6.8.2
+npm install bcrypt@^6.0.0
+npm install cors@^2.8.5
+npm install dotenv@^16.5.0
+npm install express@^5.1.0
+npm install jsonwebtoken@^9.0.2
+npm install openai@^4.100.0
+npm install prisma@^6.8.2
+
+COMANDO ÚNICO BACKEND:
+---------------------
+npm install @prisma/client@^6.8.2 bcrypt@^6.0.0 cors@^2.8.5 dotenv@^16.5.0 express@^5.1.0 jsonwebtoken@^9.0.2 openai@^4.100.0 prisma@^6.8.2
+
+=========================================================
+⚛️ FRONTEND (React + Vite)
+=========================================================
+
+DEPENDENCIAS DE PRODUCCIÓN:
+---------------------------
+• @tailwindcss/vite@^4.1.6  - Plugin de Tailwind CSS para Vite
+• axios@^1.9.0              - Cliente HTTP para hacer peticiones API
+• framer-motion@^12.12.1    - Librería de animaciones para React (!SE TIENE QUE ELIMINAR)
+• react@^19.1.0             - Framework de React
+• react-dom@^19.1.0         - React DOM renderer
+• react-icons@^5.5.0        - Iconos para React
+• react-router-dom@^7.6.0   - Enrutamiento en React
+• tailwindcss@^4.1.6        - Framework CSS utility-first
+
+DEPENDENCIAS DE DESARROLLO:
+---------------------------
+• @eslint/js@^9.25.0                    - Configuración base de ESLint
+• @types/react@^19.1.2                  - Tipos de TypeScript para React
+• @types/react-dom@^19.1.2              - Tipos de TypeScript para React DOM
+• @vitejs/plugin-react@^4.4.1           - Plugin de React para Vite
+• eslint@^9.25.0                        - Linter de JavaScript/TypeScript
+• eslint-plugin-react-hooks@^5.2.0      - Plugin ESLint para React Hooks
+• eslint-plugin-react-refresh@^0.4.19   - Plugin ESLint para React Refresh
+• globals@^16.0.0                       - Variables globales para ESLint
+• vite@^6.3.5                          - Build tool y dev server
+
+COMANDOS INDIVIDUALES FRONTEND (PRODUCCIÓN):
+--------------------------------------------
+npm install @tailwindcss/vite@^4.1.6
+npm install axios@^1.9.0
+npm install framer-motion@^12.12.1
+npm install react@^19.1.0
+npm install react-dom@^19.1.0
+npm install react-icons@^5.5.0
+npm install react-router-dom@^7.6.0
+npm install tailwindcss@^4.1.6
+
+COMANDOS INDIVIDUALES FRONTEND (DESARROLLO):
+--------------------------------------------
+npm install -D @eslint/js@^9.25.0
+npm install -D @types/react@^19.1.2
+npm install -D @types/react-dom@^19.1.2
+npm install -D @vitejs/plugin-react@^4.4.1
+npm install -D eslint@^9.25.0
+npm install -D eslint-plugin-react-hooks@^5.2.0
+npm install -D eslint-plugin-react-refresh@^0.4.19
+npm install -D globals@^16.0.0
+npm install -D vite@^6.3.5
+
+COMANDO ÚNICO FRONTEND (PRODUCCIÓN):
+-----------------------------------
+npm install @tailwindcss/vite@^4.1.6 axios@^1.9.0 framer-motion@^12.12.1 react@^19.1.0 react-dom@^19.1.0 react-icons@^5.5.0 react-router-dom@^7.6.0 tailwindcss@^4.1.6
+
+COMANDO ÚNICO FRONTEND (DESARROLLO):
+-----------------------------------
+npm install -D @eslint/js@^9.25.0 @types/react@^19.1.2 @types/react-dom@^19.1.2 @vitejs/plugin-react@^4.4.1 eslint@^9.25.0 eslint-plugin-react-hooks@^5.2.0 eslint-plugin-react-refresh@^0.4.19 globals@^16.0.0 vite@^6.3.5
+
+=========================================================
+🚀 INSTALACIÓN COMPLETA DEL PROYECTO
+=========================================================
+
+OPCIÓN 1 - USANDO PACKAGE.JSON (RECOMENDADO):
+---------------------------------------------
+cd Backend
+npm install
+
+cd ../FrontEnd
+npm install
+
+OPCIÓN 2 - INSTALACIÓN MANUAL:
+------------------------------
+# Backend
+cd Backend
+npm install @prisma/client@^6.8.2 bcrypt@^6.0.0 cors@^2.8.5 dotenv@^16.5.0 express@^5.1.0 jsonwebtoken@^9.0.2 openai@^4.100.0 prisma@^6.8.2
+
+# Frontend
+cd ../FrontEnd
+npm install @tailwindcss/vite@^4.1.6 axios@^1.9.0 framer-motion@^12.12.1 react@^19.1.0 react-dom@^19.1.0 react-icons@^5.5.0 react-router-dom@^7.6.0 tailwindcss@^4.1.6
+npm install -D @eslint/js@^9.25.0 @types/react@^19.1.2 @types/react-dom@^19.1.2 @vitejs/plugin-react@^4.4.1 eslint@^9.25.0 eslint-plugin-react-hooks@^5.2.0 eslint-plugin-react-refresh@^0.4.19 globals@^16.0.0 vite@^6.3.5
+
+=========================================================
+📊 RESUMEN ESTADÍSTICO
+=========================================================
+
+TOTAL DEPENDENCIAS: 25
+• Backend (Producción): 8 dependencias
+• Frontend (Producción): 8 dependencias
+• Frontend (Desarrollo): 9 dependencias
+
+TECNOLOGÍAS PRINCIPALES:
+• Backend: Node.js, Express, Prisma, OpenAI, JWT
+• Frontend: React 19, Vite, TailwindCSS, Framer Motion
+• Base de datos: Prisma ORM
+• Autenticación: JWT + bcrypt
+• IA: OpenAI API
+• Estilo: TailwindCSS
+• Animaciones: Framer Motion

@@ -1,12 +1,10 @@
-const dotenv = require('dotenv');
-// Es importante cargar las variables de entorno antes de importar otros módulos
+import dotenv from 'dotenv';
 dotenv.config();
 
-// ✅ Usa require
-const express = require('express'); 
-const cors = require('cors');
-const ingredientRoutes = require('./Routes/ingredientRoutes');
-const authRoutes = require('./Routes/authRouts');
+import express from 'express';
+import cors from 'cors';
+import ingredientRoutes from './Routes/ingredientRoutes.js';
+import authRoutes from './Routes/authRouts.js';
 
 const app = express();
 

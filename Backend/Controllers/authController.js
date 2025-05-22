@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const { createUser, findUserByEmail, comparePasswords } = require("../services/authService");
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import { createUser, findUserByEmail, comparePasswords } from "../services/authService.js";
 
 dotenv.config();
 
-const signup = async (req, res) => {
+export const signup = async (req, res) => {
 	console.log("Signup request received:", req.body);
 	const { name, email, password } = req.body;
 	
@@ -20,11 +20,11 @@ const signup = async (req, res) => {
 		const user = await createUser({ name, email, password });
 		res.status(201).json({ message: "Usuario creado creado", userId: user.id });
 	} catch (error) {
-		res.status(500).json({ error: "Signup fallido" });
+		res.status(500).json({ error: "SignUp fallido" });
 	}
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		const user = await findUserByEmail(email);
@@ -34,13 +34,8 @@ const login = async (req, res) => {
 		if (!isValid) return res.status(401).json({ error: "Credenciales Invalidad" });
 
 		const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-		res.status(200).json({ token });
+		res.status(200).json({ user});
 	} catch (error) {
 		res.status(500).json({ error: "Login failed" });
 	}
-};
-
-module.exports = {
-	signup,
-	login
 };

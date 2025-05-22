@@ -32,6 +32,14 @@ const Login = () => {
 		try {
 			const response = await api.post("/api/auth/login", formData);
 			const respuestaLogin = response.data
+			const usuario = respuestaLogin.user;
+			console.log("Usuario:", usuario);
+			console.log("Password:", usuario.password)
+			
+			// Guardar la información del usuario en localStorage
+			localStorage.setItem('userInfo', JSON.stringify(usuario));
+			// Guarda también el token si lo recibes
+			localStorage.setItem('token', usuario.password);
 			console.log("Login successful:",respuestaLogin);
 			// Save token or user data to local storage/context
 			navigate("/");
@@ -66,14 +74,14 @@ const Login = () => {
 								onClick={() => navigate("/")}
 								className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
 							>
-								<FaArrowLeft className="mr-2" /> Back to Home
+								<FaArrowLeft className="mr-2" /> Regresar a Home
 							</button>
 						</div>
 
 						<h2 className="text-3xl font-bold text-[#295F4E] mb-4 text-center mt-8">
 							Ecorecipe
 						</h2>
-						<p className="text-[#295F4E]/80 text-center mb-8">Cook smart, waste less</p>
+						<p className="text-[#295F4E]/80 text-center mb-8">Cocina mejor, desperdicia menos.</p>
 
 						<div className="relative w-64 h-64 mb-8">
 							<div className="absolute inset-0 bg-white rounded-full p-6 border-8 border-[#50B88C]/20 shadow-xl flex items-center justify-center">
@@ -110,12 +118,12 @@ const Login = () => {
 							className="flex items-center justify-center gap-3 w-full bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg mb-6 shadow-sm hover:shadow-md transition-all"
 						>
 							<FaGoogle className="text-[#F18F01]" />
-							Log in with Google
+							Inicia Sesion con Google
 						</button>
 
 						<div className="flex items-center my-6">
 							<hr className="flex-1 border-gray-300" />
-							<span className="px-4 text-gray-500 text-sm">O LOGEATE CON EMAIL</span>
+							<span className="px-4 text-gray-500 text-sm">O INICIA SESION CON EMAIL</span>
 							<hr className="flex-1 border-gray-300" />
 						</div>
 
@@ -151,7 +159,7 @@ const Login = () => {
 										htmlFor="password"
 										className="block text-sm font-medium text-gray-700"
 									>
-										Password
+										Contraseña
 									</label>
 								</div>
 								<input
@@ -213,7 +221,7 @@ const Login = () => {
 										Iniciando Sesion...
 									</span>
 								) : (
-									"Log In"
+									"Iniciar Sesion"
 								)}
 							</button>
 						</form>

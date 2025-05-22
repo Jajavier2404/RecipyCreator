@@ -1,4 +1,13 @@
 {
+  "name": "recipycreator-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend for RecipyCreator application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch Server.js"
+  },
   "dependencies": {
     "@prisma/client": "^6.8.2",
     "bcrypt": "^6.0.0",
@@ -6,9 +15,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "openai": "^4.100.0",
-    "prisma": "^6.8.2",
-    "type": "module"
-
+    "openai": "^4.102.0",
+    "prisma": "^6.8.2"
   }
 }

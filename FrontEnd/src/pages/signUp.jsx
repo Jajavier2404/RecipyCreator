@@ -122,14 +122,14 @@ const SignUp = () => {
 								onClick={() => navigate("/")}
 								className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
 							>
-								<FaArrowLeft className="mr-2" /> Back to Home
+								<FaArrowLeft className="mr-2" /> Regresar a Inicio
 							</button>
 						</div>
 
 						<h2 className="text-3xl font-bold text-[#295F4E] mb-4 text-center mt-8">
 							Ecorecipe
 						</h2>
-						<p className="text-[#295F4E]/80 text-center mb-8">Cook smart, waste less</p>
+						<p className="text-[#295F4E]/80 text-center mb-8">Cocina mejor, desperdicia menos.</p>
 
 						<div className="relative w-64 h-64 mb-8">
 							<div className="absolute inset-0 bg-white rounded-full p-6 border-8 border-[#50B88C]/20 shadow-xl flex items-center justify-center">
@@ -158,7 +158,7 @@ const SignUp = () => {
 							onClick={() => navigate("/")}
 							className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
 						>
-							<FaArrowLeft className="mr-2" /> Back to Home
+							<FaArrowLeft className="mr-2" /> Regresar a Inicio
 						</button>
 					</div>
 
@@ -166,10 +166,10 @@ const SignUp = () => {
 					<div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
 						<div className="mb-8 text-center">
 							<h1 className="text-3xl font-bold text-[#295F4E]">
-								Create Your Account
+								Crea tu Cuenta
 							</h1>
 							<p className="text-gray-600 mt-2">
-								Join our community of eco-conscious cooks
+								Únete a nuestra comunidad de cocineros conscientes del medio ambiente.
 							</p>
 						</div>
 
@@ -179,7 +179,7 @@ const SignUp = () => {
 								<div
 									className={`w-8 h-8 rounded-full flex items-center justify-center ${
 										step >= 1
-											? "bg-[#50B88C] text-white"
+											? "bg-[#F18F01] text-white"
 											: "bg-gray-200 text-gray-600"
 									}`}
 								>
@@ -187,13 +187,13 @@ const SignUp = () => {
 								</div>
 								<div
 									className={`flex-1 h-1 mx-2 ${
-										step >= 2 ? "bg-[#50B88C]" : "bg-gray-200"
+										step >= 2 ? "bg-[#F18F01]" : "bg-gray-200"
 									}`}
 								></div>
 								<div
 									className={`w-8 h-8 rounded-full flex items-center justify-center ${
 										step >= 2
-											? "bg-[#50B88C] text-white"
+											? "bg-[#F18F01] text-white"
 											: "bg-gray-200 text-gray-600"
 									}`}
 								>
@@ -225,7 +225,7 @@ const SignUp = () => {
 											htmlFor="name"
 											className="block text-sm font-medium text-gray-700 mb-2"
 										>
-											Full Name
+											Nombre Completo
 										</label>
 										<div className="relative">
 											<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -242,7 +242,7 @@ const SignUp = () => {
 														? "border-red-500"
 														: "border-gray-300"
 												} focus:outline-none focus:ring-2 focus:ring-[#50B88C] focus:border-transparent transition-all`}
-												placeholder="John Doe"
+												placeholder="Tu Nombre"
 											/>
 										</div>
 										{errors.name && (
@@ -257,7 +257,7 @@ const SignUp = () => {
 											htmlFor="email"
 											className="block text-sm font-medium text-gray-700 mb-2"
 										>
-											Email Address
+											Direccion de Correo Electrónico
 										</label>
 										<div className="relative">
 											<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -274,7 +274,7 @@ const SignUp = () => {
 														? "border-red-500"
 														: "border-gray-300"
 												} focus:outline-none focus:ring-2 focus:ring-[#50B88C] focus:border-transparent transition-all`}
-												placeholder="your@email.com"
+												placeholder="ejemplo@email.com"
 											/>
 										</div>
 										{errors.email && (
@@ -289,13 +289,13 @@ const SignUp = () => {
 										onClick={nextStep}
 										className="w-full bg-[#295F4E] hover:bg-[#4c7a6b] cursor-pointer text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
 									>
-										Continue
+										Continuar
 									</button>
 
 									<div className="flex items-center my-6">
 										<hr className="flex-1 border-gray-300" />
 										<span className="px-4 text-gray-500 text-sm">
-											OR SIGN UP WITH
+											O INICIA SESION CON
 										</span>
 										<hr className="flex-1 border-gray-300" />
 									</div>
@@ -306,7 +306,7 @@ const SignUp = () => {
 										className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all"
 									>
 										<FaGoogle className="text-[#295F4E]" />
-										Sign up with Google
+										Inicia Sesion con Google
 									</button>
 								</>
 							) : (
@@ -316,7 +316,7 @@ const SignUp = () => {
 											htmlFor="password"
 											className="block text-sm font-medium text-gray-700 mb-2"
 										>
-											Password
+											Contraseña
 										</label>
 										<div className="relative">
 											<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -348,7 +348,7 @@ const SignUp = () => {
 											htmlFor="confirmPassword"
 											className="block text-sm font-medium text-gray-700 mb-2"
 										>
-											Confirm Password
+											Confirmar Contraseña
 										</label>
 										<div className="relative">
 											<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -389,18 +389,18 @@ const SignUp = () => {
 													}`}
 												/>
 											</div>
-											<div className="ml-3 text-sm">
+											<div className="ml-3 text-[0.9rem]">
 												<label
 													htmlFor="agreeTerms"
 													className="font-medium text-gray-700"
 												>
-													I agree to the{" "}
+													Estoy de acuerdo con los{" "}
 													<a href="#" className="text-[#F18F01]">
-														Terms of Service
+														Terminos de Servicio
 													</a>{" "}
 													and{" "}
 													<a href="#" className="text-[#F18F01]">
-														Privacy Policy
+														Politica de privacidad
 													</a>
 												</label>
 											</div>
@@ -418,7 +418,7 @@ const SignUp = () => {
 											onClick={prevStep}
 											className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
 										>
-											Back
+											Atras
 										</button>
 
 										<button
@@ -448,10 +448,10 @@ const SignUp = () => {
 															d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 														></path>
 													</svg>
-													Creating Account...
+													Creando Cuenta...
 												</span>
 											) : (
-												"Create Account"
+												"Crear Cuenta"
 											)}
 										</button>
 									</div>
@@ -461,12 +461,12 @@ const SignUp = () => {
 
 						<div className="mt-8 text-center">
 							<p className="text-gray-700">
-								Already have an account?{" "}
+								Ya tienes cuenta?{" "}
 								<Link
 									to="/login"
 									className="text-[#295F4E] font-medium hover:text-[#45675c]"
 								>
-									Log In
+									Iniciar Sesion
 								</Link>
 							</p>
 						</div>

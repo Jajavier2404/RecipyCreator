@@ -8,6 +8,7 @@ import ButtonSS from '../components/Sesion/buttonSS';
 import curry from '../assets/curry.jpg';
 import ommelette from '../assets/ommelete.jpg';
 import pastaP from '../assets/pastaPrimavera.jpg';
+import UserProfile from '../components/Sesion/userProfile';
 const Home = () => {
     const navigate = useNavigate();
 
@@ -37,10 +38,15 @@ const Home = () => {
         { name: 'Vegetable Curry', time: '35 min', difficulty: 'Medium', img: curry },
         { name: 'Quick Omelette', time: '15 min', difficulty: 'Easy', img: ommelette },
     ]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     // Efecto para la animación inicial
     useEffect(() => {
         setAnimated(true);
+        // Comprobar si el usuario está logueado
+        const userInfo = localStorage.getItem('userInfo');
+        setIsLoggedIn(!!userInfo);
     }, []);
 
     // Manejadores de eventos
@@ -73,15 +79,22 @@ const Home = () => {
         <div className="flex h-screen overflow-hidden">
             {/* Barra lateral responsiva */}
             <aside>
-                <SideBar />
+                <SideBar />                
             </aside>
 
             {/* Contenido principal con fondo mejorado */}
             <main className="flex-1 bg-[#FFF4E0] overflow-y-auto">
-                <aside>
-                    <ButtonSS text="Login" onClick={handleClickLogin} />
-                    <ButtonSS text="Sign Up" onClick={handleClickSignUp} />
-                </aside>
+                {isLoggedIn&&(
+                    <aside className='fixed top-5 right-10 z-50'>
+                        <UserProfile />
+                    </aside>
+                )}
+                {!isLoggedIn&&(
+                    <aside>
+                        <ButtonSS text="Login" onClick={handleClickLogin} />
+                        <ButtonSS text="Sign Up" onClick={handleClickSignUp} />
+                    </aside>
+                )}
                 {/* Hero Section - Con más espacio vertical y horizontal */}
                 <section className="relative min-h-[98vh] flex items-center justify-center px-8 py-20">
                     

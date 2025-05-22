@@ -1,7 +1,7 @@
-const openAIService = require('../services/aiService');
+import openAIService from '../services/aiService.js';
 
 // Función para procesar los ingredientes recibidos y llamarlos desde el servicio.
-const recipeCreator = async (req, res) => {
+export const recipeCreator = async (req, res) => {
   try {
     const { ingredients } = req.body; // Obtenemos el texto de ingredientes desde el cuerpo de la solicitud
     const ingredientsRecipe = await openAIService.generateRecipeAI(ingredients); // Llamamos a la función del servicio
@@ -13,8 +13,4 @@ const recipeCreator = async (req, res) => {
     console.error('Error:', error);
     res.status(500).json({ error: 'Error al procesar los ingredientes' }); // Manejo de errores
   }
-};
-
-module.exports = {
-  recipeCreator, // Exportamos la función para usarla en las rutas
 };

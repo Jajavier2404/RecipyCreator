@@ -1,8 +1,9 @@
 // routes/ingredientRoutes.js
-const express = require('express');
+import express from 'express';
+import { recipeCreator } from '../controllers/ingredientController.js';
+
 const router = express.Router();
-const { recipeCreator } = require('../controllers/ingredientController');
 
 router.post('/process', recipeCreator); // 
 
-module.exports = router;
+export default router;

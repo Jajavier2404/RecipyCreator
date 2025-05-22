@@ -1,5 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcrypt");
+import { PrismaClient } from "@prisma/client"
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -10,10 +10,10 @@ const createUser = async ({ name, email, password }) => {
 		const user = await prisma.user.create({
 			data: { name, email, password: hashedPassword },
 		});
-		console.log("User created successfully:", { id: user.id, name: user.name });
+		console.log("Usuario creado con Exito:", { id: user.id, name: user.name });
 		return user;
 	} catch (error) {
-		console.error("Error creating user:", error);
+		console.error("Error al crear el Usuario:", error);
 		throw error;
 	}
 };
@@ -26,8 +26,4 @@ const comparePasswords = (inputPassword, hashedPassword) => {
 	return bcrypt.compare(inputPassword, hashedPassword);
 };
 
-module.exports = {
-	createUser,
-	findUserByEmail,
-	comparePasswords
-};
+export { createUser, findUserByEmail, comparePasswords };

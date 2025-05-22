@@ -1,4 +1,6 @@
-const OpenAI = require('openai'); // CORRECTO en CommonJS
+import OpenAI from 'openai'; // ES Modules
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Clave directamente en el código (solución temporal, no recomendada para producción)
 const apiKey = process.env.OPENAI_API_KEY;
@@ -27,7 +29,7 @@ const generateRecipeAI = async (ingredients) => {
         const jsonRegister = await aiIngredients.chat.completions.create({
             model: 'gpt-4o-mini', 
             messages: messages,
-            response_format: { type: 'json_object' },  // Formato correcto para OpenAI API más reciente
+            response_format: 'json', 
         });
 
         // Procesamos la respuesta de OpenAI
@@ -41,6 +43,6 @@ const generateRecipeAI = async (ingredients) => {
     }
 };
 
-module.exports = {
+export default {
   generateRecipeAI, // Exportamos la función
 };
