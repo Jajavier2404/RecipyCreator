@@ -67,23 +67,12 @@ export default function Favorites({ user, recipes }) {
             difficulty: 'Fácil',
             time: '15 min'
         },
-        { 
-            id: 7, 
-            title: 'Ensalada César', 
-            description: 'Fresca ensalada con lechuga romana, crutones caseros y aderezo césar. Saludable y deliciosa.',
-            image: '🥗',
-            difficulty: 'Fácil',
-            time: '15 min'
-        },
     ];
 
     const currentUser = user || defaultUser;
     const currentRecipes = recipes || defaultRecipes;
     const recipesPerView = 3;
-    
-    // CORRECCIÓN PRINCIPAL: Cálculo correcto del número máximo de slides
-    const totalSlides = Math.ceil(currentRecipes.length / recipesPerView);
-    const maxIndex = Math.max(0, totalSlides - 1);
+    const maxIndex = Math.max(0, currentRecipes.length - recipesPerView);
 
     // Modal functions
     const openModal = (recipe) => {
@@ -111,32 +100,23 @@ export default function Favorites({ user, recipes }) {
     };
 
     const goToSlide = (index) => {
-        if (isAnimating || index === currentIndex || index > maxIndex) return;
+        if (isAnimating || index === currentIndex) return;
         setIsAnimating(true);
         setCurrentIndex(index);
         setTimeout(() => setIsAnimating(false), 300);
     };
 
-    // Función helper para obtener las recetas del slide actual
-    const getCurrentSlideRecipes = () => {
-        const startIndex = currentIndex * recipesPerView;
-        const endIndex = startIndex + recipesPerView;
-        return currentRecipes.slice(startIndex, endIndex);
-    };
-
-    // Auto-advance carousel (comentado para mejor UX)
+    // Auto-advance carousel
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
         setIsLoggedIn(!!userInfo);
-        
-        // Opcional: Auto-advance cada 8 segundos (más tiempo para leer)
-        // const interval = setInterval(() => {
-        //     if (!isAnimating && !isModalOpen) {
-        //         nextSlide();
-        //     }
-        // }, 8000);
-        // return () => clearInterval(interval);
-    }, []);
+        const interval = setInterval(() => {
+            if (!isAnimating && !isModalOpen) { // Don't auto-advance when modal is open
+                nextSlide();
+            }
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [isAnimating, currentIndex, isModalOpen]);
 
     return (
         <div className="flex h-screen bg-gradient-to-br from-[#FFF4E0] to-[#FFE4B5]">
@@ -172,47 +152,48 @@ export default function Favorites({ user, recipes }) {
 
                     {/* Recipe Carousel Section */}
                     <section className="p-8 relative">
-                        <div className="text-center mb-9">
+                        <div className="text-center mb-12">
                             <h2 className="text-5xl font-bold bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] bg-clip-text text-transparent mb-4">
                                 Mis Recetas Favoritas
                             </h2>
                             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                                 Descubre tu colección personalizada de recetas favoritas. Cada una cuidadosamente seleccionada para crear momentos especiales.
                             </p>
-                            {/* Información de debug (remover en producción) */}
-                            <div className="text-sm text-gray-500 mt-4">
-                                Slide {currentIndex + 1} de {totalSlides} | Recetas totales: {currentRecipes.length}
-                            </div>
                         </div>
 
                         {/* Carousel Container */}
                         <div className="relative max-w-7xl mx-auto">
-                            {/* Navigation Buttons - Solo mostrar si hay más de un slide */}
-                            {totalSlides > 1 && (
-                                <>
-                                    <button
-                                        onClick={prevSlide}
-                                        disabled={isAnimating}
-                                        className="absolute left-[-50px] top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-white shadow-2xl rounded-full flex items-center justify-center text-[#295F4E] hover:text-[#F18F01] transition-all duration-300 hover:scale-110 disabled:opacity-50 -translate-x-7"
-                                    >
-                                        <ChevronLeft className="w-8 h-8" />
-                                    </button>
-                                    
-                                    <button
-                                        onClick={nextSlide}
-                                        disabled={isAnimating}
-                                        className="absolute right-[-50px] top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-white shadow-2xl rounded-full flex items-center justify-center text-[#295F4E] hover:text-[#F18F01] transition-all duration-300 hover:scale-110 disabled:opacity-50 translate-x-7"
-                                    >
-                                        <ChevronRight className="w-8 h-8" />
-                                    </button>
-                                </>
-                            )}
+                            {/* Navigation Buttons */}
+                            <button
+                                onClick={prevSlide}
+                                disabled={isAnimating}
+                                className="absolute left-[-50px] top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-white shadow-2xl rounded-full flex items-center justify-center text-[#295F4E] hover:text-[#F18F01] transition-all duration-300 hover:scale-110 disabled:opacity-50 -translate-x-7"
+                            >
+                                <ChevronLeft className="w-8 h-8" />
+                            </button>
+                            
+                            <button
+                                onClick={nextSlide}
+                                disabled={isAnimating}
+                                className="absolute right-[-50px] top-1/2 -translate-y-1/2 z-10 w-14 h-14 bg-white shadow-2xl rounded-full flex items-center justify-center text-[#295F4E] hover:text-[#F18F01] transition-all duration-300 hover:scale-110 disabled:opacity-50 translate-x-7"
+                            >
+                                <ChevronRight className="w-8 h-8" />
+                            </button>
 
-                            {/* Carousel Content - Rediseñado para mostrar solo las recetas del slide actual */}
+                            {/* Carousel Track */}
                             <div className="overflow-hidden rounded-2xl">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {getCurrentSlideRecipes().map((recipe) => (
-                                        <div key={recipe.id} className="w-full">
+                                <div 
+                                    className="flex transition-transform duration-500 ease-out"
+                                    style={{ 
+                                        transform: `translateX(-${currentIndex * (100 / recipesPerView)}%)`,
+                                        width: `${currentRecipes.length * (100 / recipesPerView)}%`
+                                    }}
+                                >
+                                    {currentRecipes.map((recipe) => (
+                                        <div
+                                            key={recipe.id}
+                                            className="w-full px-3"
+                                        >
                                             <article className="group bg-white rounded-2xl border border-gray-100 overflow-hidden h-full">
                                                 {/* Recipe Image/Icon */}
                                                 <div className="h-48 bg-gradient-to-br from-[#295F4E] to-[#1e4a3b] flex items-center justify-center relative overflow-hidden">
@@ -263,22 +244,20 @@ export default function Favorites({ user, recipes }) {
                                 </div>
                             </div>
 
-                            {/* Carousel Indicators - Solo mostrar si hay más de un slide */}
-                            {totalSlides > 1 && (
-                                <div className="flex justify-center gap-3 mt-8">
-                                    {Array.from({ length: totalSlides }).map((_, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => goToSlide(index)}
-                                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                                index === currentIndex 
-                                                    ? 'bg-[#F18F01] w-8' 
-                                                    : 'bg-gray-300 hover:bg-gray-400'
-                                            }`}
-                                        />
-                                    ))}
-                                </div>
-                            )}
+                            {/* Carousel Indicators */}
+                            <div className="flex justify-center gap-3 mt-8">
+                                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => goToSlide(index)}
+                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                            index === currentIndex 
+                                                ? 'bg-[#F18F01] w-8' 
+                                                : 'bg-gray-300 hover:bg-gray-400'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </section>
 

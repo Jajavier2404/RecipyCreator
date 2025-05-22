@@ -9,6 +9,7 @@ import curry from '../assets/curry.jpg';
 import ommelette from '../assets/ommelete.jpg';
 import pastaP from '../assets/pastaPrimavera.jpg';
 import UserProfile from '../components/Sesion/userProfile';
+import RecipeModal from '../components/modal';
 const Home = () => {
     const navigate = useNavigate();
 
@@ -81,7 +82,6 @@ const Home = () => {
             <aside>
                 <SideBar />                
             </aside>
-
             {/* Contenido principal con fondo mejorado */}
             <main className="flex-1 bg-[#FFF4E0] overflow-y-auto">
                 {isLoggedIn&&(
