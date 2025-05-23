@@ -70,7 +70,7 @@ const Login = () => {
 						<div className="absolute top-0 left-0 p-4">
 							<button
 								onClick={() => navigate("/")}
-								className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
+								className="flex items-center text-[#295F4E] cursor-pointer hover:text-[#50B88C] transition-colors"
 							>
 								<FaArrowLeft className="mr-2" /> Regresar a Home
 							</button>
@@ -113,7 +113,7 @@ const Login = () => {
 						{/* Google login button */}
 						<button
 							onClick={handleGoogleLogin}
-							className="flex items-center justify-center gap-3 w-full bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg mb-6 shadow-sm hover:shadow-md transition-all"
+							className="flex items-center justify-center cursor-pointer gap-3 w-full bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg mb-6 shadow-sm hover:shadow-md transition-all"
 						>
 							<FaGoogle className="text-[#F18F01]" />
 							Inicia Sesion con Google
@@ -192,7 +192,7 @@ const Login = () => {
 							<button
 								type="submit"
 								disabled={isLoading}
-								className="w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
+								className="w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-lg cursor-pointer transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
 							>
 								{isLoading ? (
 									<span className="flex items-center justify-center">

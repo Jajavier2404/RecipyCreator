@@ -17,7 +17,7 @@ export default function Favorites({ recipes }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     const defaultUser = {
-        initials: 'JA',
+        initials: 'NA',
         name: 'Juan Antonio',
         gmail: 'juan.antonio@email.com',
     };
@@ -135,11 +135,13 @@ export default function Favorites({ recipes }) {
                     console.log('Usuario cargado:', parsedUser);
                 } else {
                     setIsLoggedIn(false);
+                    setUser(null); // Asegurar que user sea null cuando no hay datos
                     console.log('No hay información de usuario en localStorage');
                 }
             } catch (error) {
                 console.error('Error al cargar datos del usuario:', error);
                 setIsLoggedIn(false);
+                setUser(null); // Asegurar que user sea null en caso de error
             } finally {
                 setIsLoading(false);
             }
@@ -178,13 +180,13 @@ export default function Favorites({ recipes }) {
             </div>
         );
     }
-    if (isLoggedIn){
-        const userName = user.name || user.email?.split('@')[0] || 'Usuario';
     
-        const initials = userName
-            ? userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
-            : '??';
-    }
+    // AQUÍ ESTÁ EL PROBLEMA ARREGLADO: Verificar que user no sea null antes de acceder a sus propiedades
+    const userName = user?.name || user?.email?.split('@')[0] || 'Usuario';
+    const initials = user && userName
+        ? userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
+        : '??';
+
     return (
         <div className="flex h-screen bg-gradient-to-br from-[#FFF4E0] to-[#FFE4B5]">
             
@@ -194,28 +196,30 @@ export default function Favorites({ recipes }) {
             {isLoggedIn ? (
                 <main className="flex-1 overflow-y-auto">
                     {/* Enhanced Header */}
-                    <header className="bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] p-8 pl-20 flex items-center gap-6 shadow-2xl relative overflow-hidden">
-                        {/* Background decoration */}
-                        <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
-                            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#F18F01] rounded-full translate-y-24 -translate-x-24"></div>
-                        </div>
-                        
-                        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-500 hover:rotate-12">
-                            <span className="text-white text-4xl font-bold">
-                                {initials}
-                            </span>
-                        </div>
-                        <div className="text-white relative z-10">
-                            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-                                { user.name}
-                            </h1>
-                            <p className="text-gray-200 text-lg flex items-center gap-2">
-                                <Heart className="w-5 h-5 text-[#F18F01] fill-current" />
-                                { user.email}
-                            </p>
-                        </div>
-                    </header>
+                    {isLoggedIn && user && (
+                        <header className="bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] p-8 pl-20 flex items-center gap-6 shadow-2xl relative overflow-hidden">
+                            {/* Background decoration */}
+                            <div className="absolute inset-0 opacity-10">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+                                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#F18F01] rounded-full translate-y-24 -translate-x-24"></div>
+                            </div>
+                            
+                            <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-500 hover:rotate-12">
+                                <span className="text-white text-4xl font-bold">
+                                    {initials}
+                                </span>
+                            </div>
+                            <div className="text-white relative z-10">
+                                <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                                    {user.name}
+                                </h1>
+                                <p className="text-gray-200 text-lg flex items-center gap-2">
+                                    <Heart className="w-5 h-5 text-[#F18F01] fill-current" />
+                                    {user.email}
+                                </p>
+                            </div>
+                        </header>
+                    )}
 
                     {/* Recipe Carousel Section */}
                     <section className="p-8 relative">

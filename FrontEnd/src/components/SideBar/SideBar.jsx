@@ -75,7 +75,7 @@ export default function SideBar() {
             {/* Toggle Sidebar Button */}
             <button 
                 onClick={toggleSidebar}
-                className="sidebar-toggle-btn fixed top-4 left-4 z-50 bg-[#50B88C] text-white p-2 rounded-full shadow-md hover:bg-[#3D9B75] transition-colors duration-300"
+                className="cursor-pointer sidebar-toggle-btn fixed top-4 left-4 z-50 bg-[#50B88C] text-white p-2 rounded-full shadow-md hover:bg-[#3D9B75] transition-colors duration-300"
             >
                 {isVisible ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
             </button>

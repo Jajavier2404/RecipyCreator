@@ -260,7 +260,7 @@ const Home = () => {
                         <div className="text-center mt-16">
                             <button
                                 onClick={() => navigate('/Results')}
-                                className="bg-[#295F4E] hover:bg-[#1d4436] text-white font-semibold py-4 px-10 rounded-md transition-colors duration-300 shadow-md text-lg"
+                                className="bg-[#295F4E] hover:bg-[#1d4436] text-white cursor-pointer font-semibold py-4 px-10 rounded-md transition-colors duration-300 shadow-md text-lg"
                             >
                                 Ver más recetas
                             </button>

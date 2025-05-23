@@ -120,7 +120,7 @@ const SignUp = () => {
 						<div className="absolute top-0 left-0 p-4">
 							<button
 								onClick={() => navigate("/")}
-								className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
+								className="flex items-center text-[#295F4E] hover:text-[#50B88C] cursor-pointer transition-colors"
 							>
 								<FaArrowLeft className="mr-2" /> Regresar a Inicio
 							</button>
@@ -156,7 +156,7 @@ const SignUp = () => {
 					<div className="lg:hidden p-4">
 						<button
 							onClick={() => navigate("/")}
-							className="flex items-center text-[#295F4E] hover:text-[#50B88C] transition-colors"
+							className="flex items-center text-[#295F4E] cursor-pointer hover:text-[#50B88C] transition-colors"
 						>
 							<FaArrowLeft className="mr-2" /> Regresar a Inicio
 						</button>
@@ -303,7 +303,7 @@ const SignUp = () => {
 									<button
 										type="button"
 										onClick={handleGoogleSignUp}
-										className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all"
+										className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 font-medium py-3 px-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md cursor-pointer  transition-all"
 									>
 										<FaGoogle className="text-[#295F4E]" />
 										Inicia Sesion con Google
@@ -416,7 +416,7 @@ const SignUp = () => {
 										<button
 											type="button"
 											onClick={prevStep}
-											className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+											className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-4 px-6 cursor-pointer  rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
 										>
 											Atras
 										</button>
@@ -424,7 +424,7 @@ const SignUp = () => {
 										<button
 											type="submit"
 											disabled={isLoading}
-											className="w-full bg-[#295F4E] hover:bg-[#295F4E] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
+											className="w-full bg-[#295F4E] hover:bg-[#295F4E] text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-300 cursor-pointer  shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2"
 										>
 											{isLoading ? (
 												<span className="flex items-center justify-center">

@@ -25,7 +25,7 @@ export default function ButtonSB({ text, icon, onClick }) {
     return (
         <button 
             onClick={onClick}
-            className={`${activeStyles} ${effectStyles} my-2`}
+            className={`${activeStyles} ${effectStyles} cursor-pointer my-2`}
         >
             <span className="text-xl bg-white/20 p-2 rounded-md">{icon}</span>
             <span className="font-semibold text-[17px]">{text}</span>

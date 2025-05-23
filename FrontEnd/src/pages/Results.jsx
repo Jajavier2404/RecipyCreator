@@ -167,7 +167,7 @@ export default function Results() {
 
 								{/* Botón guardar en la esquina superior derecha */}
 								<div className="absolute top-6 right-6">
-									<button className="bg-[#F18F01] hover:bg-[#E08200] text-white p-2 rounded-lg font-medium transition-colors shadow-md">
+									<button className="cursor-pointer bg-[#F18F01] hover:bg-[#E08200] text-white p-2 rounded-lg font-medium transition-colors shadow-md">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											className="h-5 w-5"
@@ -188,7 +188,7 @@ export default function Results() {
 
 							{/* Botones de acción */}
 							<div className="grid grid-cols-2 gap-4">
-								<button className="bg-[#295F4E] hover:bg-[#50B88C] text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center shadow-md">
+								<button className="cursor-pointer bg-[#295F4E] hover:bg-[#50B88C] text-white py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center shadow-md">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="h-5 w-5 mr-2"
@@ -207,7 +207,7 @@ export default function Results() {
 								</button>
 								<button
 									onClick={handleNewSearch}
-									className="bg-white border border-[#A63D40] text-[#A63D40] hover:bg-[#A63D40]/10 py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center shadow-md"
+									className="bg-white border cursor-pointer border-[#A63D40] text-[#A63D40] hover:bg-[#A63D40]/10 py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center shadow-md"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
