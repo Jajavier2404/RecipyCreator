@@ -9,7 +9,9 @@ export const isUserAuthenticated = () => {
         if (userInfo && userInfo !== 'null' && userInfo !== 'undefined') {
             const user = JSON.parse(userInfo);
             // Verificar que el objeto usuario tenga propiedades esenciales
-            return user && user.email && user.name && token;
+            // Aceptar name, username, firstName o al menos email
+            const hasName = user.name || user.username || user.firstName || user.email;
+            return user && user.email && hasName && token;
         }
         return false;
     } catch (error) {

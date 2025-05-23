@@ -127,7 +127,7 @@ const Home = () => {
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2 flex items-center justify-center text-lg"
+                                    className=" cursor-pointer w-full bg-[#F18F01] hover:bg-[#E08200] text-white font-semibold py-4 px-6 rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-[#A63D40] focus:ring-offset-2 flex items-center justify-center text-lg"
                                     disabled={isLoading}
                                 >
                                     {isLoading ? (

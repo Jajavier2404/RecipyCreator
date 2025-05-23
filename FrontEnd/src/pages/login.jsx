@@ -33,8 +33,6 @@ const Login = () => {
 			const response = await api.post("/api/auth/login", formData);
 			const respuestaLogin = response.data
 			const usuario = respuestaLogin.user;
-			console.log("Usuario:", usuario);
-			console.log("Password:", usuario.password)
 			
 			// Guardar la información del usuario en localStorage
 			localStorage.setItem('userInfo', JSON.stringify(usuario));

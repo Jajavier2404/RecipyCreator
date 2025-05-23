@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight, Heart } from "lucide-react";
 import SideBar from "../components/SideBar/SideBar";
 import RecipeModal from "../components/modal"; // Import the modal component
+import { useNavigate } from 'react-router-dom';
 
-export default function Favorites({ user, recipes }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // Set to true for demo
+
+export default function Favorites({ recipes }) {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Set to true for demo
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
-    
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Estado de carga
     // Modal state
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,23 +71,13 @@ export default function Favorites({ user, recipes }) {
             difficulty: 'Fácil',
             time: '15 min'
         },
-        { 
-            id: 7, 
-            title: 'Ensalada César', 
-            description: 'Fresca ensalada con lechuga romana, crutones caseros y aderezo césar. Saludable y deliciosa.',
-            image: '🥗',
-            difficulty: 'Fácil',
-            time: '15 min'
-        },
     ];
 
-    const currentUser = user || defaultUser;
     const currentRecipes = recipes || defaultRecipes;
     const recipesPerView = 3;
-    
-    // CORRECCIÓN PRINCIPAL: Cálculo correcto del número máximo de slides
-    const totalSlides = Math.ceil(currentRecipes.length / recipesPerView);
-    const maxIndex = Math.max(0, totalSlides - 1);
+    // Calcular el número total de páginas/grupos
+    const totalPages = Math.ceil(currentRecipes.length / recipesPerView);
+    const maxIndex = Math.max(0, totalPages - 1);
 
     // Modal functions
     const openModal = (recipe) => {
@@ -110,34 +104,87 @@ export default function Favorites({ user, recipes }) {
         setTimeout(() => setIsAnimating(false), 300);
     };
 
+    // Función para obtener las recetas de la página actual
+    const getCurrentPageRecipes = () => {
+        const startIndex = currentIndex * recipesPerView;
+        const endIndex = Math.min(startIndex + recipesPerView, currentRecipes.length);
+        return currentRecipes.slice(startIndex, endIndex);
+    };
+
     const goToSlide = (index) => {
-        if (isAnimating || index === currentIndex || index > maxIndex) return;
+        if (isAnimating || index === currentIndex) return;
         setIsAnimating(true);
         setCurrentIndex(index);
         setTimeout(() => setIsAnimating(false), 300);
     };
 
-    // Función helper para obtener las recetas del slide actual
-    const getCurrentSlideRecipes = () => {
-        const startIndex = currentIndex * recipesPerView;
-        const endIndex = startIndex + recipesPerView;
-        return currentRecipes.slice(startIndex, endIndex);
+    const handleClickLogin = async (e) => {
+        navigate('/login');
     };
 
-    // Auto-advance carousel (comentado para mejor UX)
+    // Efecto separado para cargar datos del localStorage
     useEffect(() => {
-        const userInfo = localStorage.getItem('userInfo');
-        setIsLoggedIn(!!userInfo);
-        
-        // Opcional: Auto-advance cada 8 segundos (más tiempo para leer)
-        // const interval = setInterval(() => {
-        //     if (!isAnimating && !isModalOpen) {
-        //         nextSlide();
-        //     }
-        // }, 8000);
-        // return () => clearInterval(interval);
+        // Función para cargar datos del localStorage
+        const loadUserData = () => {
+            try {
+                const userInfo = localStorage.getItem('userInfo');
+                if (userInfo) {
+                    const parsedUser = JSON.parse(userInfo);
+                    setUser(parsedUser);
+                    setIsLoggedIn(true);
+                    console.log('Usuario cargado:', parsedUser);
+                } else {
+                    setIsLoggedIn(false);
+                    console.log('No hay información de usuario en localStorage');
+                }
+            } catch (error) {
+                console.error('Error al cargar datos del usuario:', error);
+                setIsLoggedIn(false);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        // Cargar inmediatamente
+        loadUserData();
     }, []);
 
+    // Efecto separado para el carousel automático
+    useEffect(() => {
+        if (isLoading) return; // No iniciar carousel hasta que los datos estén cargados
+
+        const interval = setInterval(() => {
+            if (!isAnimating && !isModalOpen && totalPages > 1) { 
+                nextSlide();
+            }
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [isAnimating, currentIndex, isModalOpen, isLoading, totalPages]);
+
+    // Mostrar loading mientras se cargan los datos
+    if (isLoading) {
+        return (
+            <div className="flex h-screen bg-gradient-to-br from-[#FFF4E0] to-[#FFE4B5]">
+                <aside>
+                    <SideBar />
+                </aside>
+                <main className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="w-16 h-16 border-4 border-[#295F4E] border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="text-[#295F4E] text-lg">Cargando tus favoritos...</p>
+                    </div>
+                </main>
+            </div>
+        );
+    }
+    if (isLoggedIn){
+        const userName = user.name || user.email?.split('@')[0] || 'Usuario';
+    
+        const initials = userName
+            ? userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
+            : '??';
+    }
     return (
         <div className="flex h-screen bg-gradient-to-br from-[#FFF4E0] to-[#FFE4B5]">
             
@@ -147,48 +194,48 @@ export default function Favorites({ user, recipes }) {
             {isLoggedIn ? (
                 <main className="flex-1 overflow-y-auto">
                     {/* Enhanced Header */}
-                    <header className="bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] p-8 flex items-center gap-6 shadow-2xl relative overflow-hidden">
+                    <header className="bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] p-8 pl-20 flex items-center gap-6 shadow-2xl relative overflow-hidden">
                         {/* Background decoration */}
                         <div className="absolute inset-0 opacity-10">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
                             <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#F18F01] rounded-full translate-y-24 -translate-x-24"></div>
                         </div>
                         
-                        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-white to-gray-100 flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-500 hover:rotate-12">
-                            <span className="text-[#F18F01] text-4xl font-bold">
-                                {currentUser.initials}
+                        <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-500 hover:rotate-12">
+                            <span className="text-white text-4xl font-bold">
+                                {initials}
                             </span>
                         </div>
                         <div className="text-white relative z-10">
                             <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-                                {currentUser.name}
+                                { user.name}
                             </h1>
                             <p className="text-gray-200 text-lg flex items-center gap-2">
                                 <Heart className="w-5 h-5 text-[#F18F01] fill-current" />
-                                {currentUser.gmail}
+                                { user.email}
                             </p>
                         </div>
                     </header>
 
                     {/* Recipe Carousel Section */}
                     <section className="p-8 relative">
-                        <div className="text-center mb-9">
+                        <div className="text-center mb-12">
                             <h2 className="text-5xl font-bold bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] bg-clip-text text-transparent mb-4">
                                 Mis Recetas Favoritas
                             </h2>
                             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                                 Descubre tu colección personalizada de recetas favoritas. Cada una cuidadosamente seleccionada para crear momentos especiales.
                             </p>
-                            {/* Información de debug (remover en producción) */}
+                            {/* Información de páginas */}
                             <div className="text-sm text-gray-500 mt-4">
-                                Slide {currentIndex + 1} de {totalSlides} | Recetas totales: {currentRecipes.length}
+                                Página {currentIndex + 1} de {totalPages} | {currentRecipes.length} recetas totales
                             </div>
                         </div>
 
                         {/* Carousel Container */}
                         <div className="relative max-w-7xl mx-auto">
-                            {/* Navigation Buttons - Solo mostrar si hay más de un slide */}
-                            {totalSlides > 1 && (
+                            {/* Navigation Buttons - Solo mostrar si hay más de una página */}
+                            {totalPages > 1 && (
                                 <>
                                     <button
                                         onClick={prevSlide}
@@ -208,10 +255,14 @@ export default function Favorites({ user, recipes }) {
                                 </>
                             )}
 
-                            {/* Carousel Content - Rediseñado para mostrar solo las recetas del slide actual */}
+                            {/* Carousel Content - Mostrar solo las recetas de la página actual */}
                             <div className="overflow-hidden rounded-2xl">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {getCurrentSlideRecipes().map((recipe) => (
+                                <div className={`grid gap-6 transition-all duration-500 ease-out ${
+                                    getCurrentPageRecipes().length === 1 ? 'grid-cols-1 max-w-md mx-auto' :
+                                    getCurrentPageRecipes().length === 2 ? 'grid-cols-1 md:grid-cols-2' :
+                                    'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+                                }`}>
+                                    {getCurrentPageRecipes().map((recipe) => (
                                         <div key={recipe.id} className="w-full">
                                             <article className="group bg-white rounded-2xl border border-gray-100 overflow-hidden h-full">
                                                 {/* Recipe Image/Icon */}
@@ -263,10 +314,10 @@ export default function Favorites({ user, recipes }) {
                                 </div>
                             </div>
 
-                            {/* Carousel Indicators - Solo mostrar si hay más de un slide */}
-                            {totalSlides > 1 && (
+                            {/* Carousel Indicators - Solo mostrar si hay más de una página */}
+                            {totalPages > 1 && (
                                 <div className="flex justify-center gap-3 mt-8">
-                                    {Array.from({ length: totalSlides }).map((_, index) => (
+                                    {Array.from({ length: totalPages }).map((_, index) => (
                                         <button
                                             key={index}
                                             onClick={() => goToSlide(index)}
@@ -301,7 +352,7 @@ export default function Favorites({ user, recipes }) {
                         <p className="text-gray-600 mb-6">
                             Inicia sesión para descubrir y guardar tus recetas favoritas
                         </p>
-                        <button className="bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] text-white px-8 py-3 rounded-full hover:from-[#F18F01] hover:to-[#e07d01] transition-all duration-300 transform hover:scale-105">
+                        <button onClick={handleClickLogin} className="cursor-pointer bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] text-white px-8 py-3 rounded-full hover:from-[#F18F01] hover:to-[#e07d01] transition-all duration-300 transform hover:scale-105">
                             Iniciar Sesión
                         </button>
                     </div>

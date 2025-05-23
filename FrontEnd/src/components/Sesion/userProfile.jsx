@@ -2,16 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
-    const [user, setUser] = useState(null);
-    const [isOpen, setIsOpen] = useState(false); // Estado para controlar si el dropdown está abierto
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Estado para controlar la carga
+    const [isOpen, setIsOpen] = useState(false); // Estado para controlar si el dropdown está abierto
     const dropdownRef = useRef(null); // Ref para el contenedor del dropdown
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
-            setUser(JSON.parse(userInfo));
+            const parsedUser = JSON.parse(userInfo);
+            setUser(parsedUser);
         }
+        setIsLoading(false); // Marcamos que ya terminó de cargar
 
         // Función para cerrar el dropdown si se hace clic fuera de él
         const handleClickOutside = (event) => {
@@ -32,11 +35,15 @@ const UserProfile = () => {
         navigate('/login');
     };
 
-    if (!user) return null;
+    // Si está cargando o no hay usuario, no renderizar nada
+    if (isLoading || !user) return null;
 
-    const initials = user.name
-        ? user.name.split(' ').map(n => n[0]).join('').toUpperCase()
-        : '?';
+    // Como ya sabemos que el usuario tiene la propiedad 'name', la usamos directamente
+    const userName = user.name || user.email?.split('@')[0] || 'Usuario';
+    
+    const initials = userName
+        ? userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
+        : '??';
 
     return (
         <div className="relative" ref={dropdownRef}> {/* Asigna la ref al contenedor principal */}
@@ -54,7 +61,7 @@ const UserProfile = () => {
                 }`} // Controla la visibilidad y la animación
             >
                 <div className="px-5 py-3 border-b border-gray-100">
-                    <p className="text-md font-bold text-gray-800">{user.name}</p>
+                    <p className="text-md font-bold text-gray-800">{userName}</p>
                     <p className="text-sm text-gray-500 truncate">{user.email}</p>
                 </div>
                 <button
