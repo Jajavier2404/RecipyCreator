@@ -223,7 +223,7 @@ export default function Favorites({ recipes }) {
 
                     {/* Recipe Carousel Section */}
                     <section className="p-8 relative">
-                        <div className="text-center mb-12">
+                        <div className="text-center mb-8">
                             <h2 className="text-5xl font-bold bg-gradient-to-r from-[#295F4E] to-[#1e4a3b] bg-clip-text text-transparent mb-4">
                                 Mis Recetas Favoritas
                             </h2>
