@@ -8,9 +8,25 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  name     String
-  email    String  @unique
-  password String
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
+  recipes   Recipe[] // Relación 1:N (un usuario puede tener muchas recetas)
 }
+
+model Recipe {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String   @db.LongText
+  ingredients  String   @db.LongText
+  instructions String   @db.LongText  // Asegúrate que esté así
+  difficulty   String
+  servings     Int
+  time         String
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int
+}
+

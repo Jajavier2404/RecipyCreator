@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Fondo from "../components/fondo";
 import SideBar from "../components/SideBar/SideBar";
+import api from "../services/api";
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Results() {
@@ -13,8 +15,14 @@ export default function Results() {
 
 	// Estado para la receta
 	const [recipe, setRecipe] = useState(null);
+
 	// Estado para la animación de elementos decorativos
 	const [animated, setAnimated] = useState(false);
+
+	const [saveRecipe, setSaveRecipe] = useState({
+        userId: 1, //! ID DE EJEMPLO se debe reemplazar por el ID del usuario autenticado
+        recipe: {}
+	});
 
 	// Efecto para iniciar animaciones
 	useEffect(() => {
@@ -28,33 +36,27 @@ export default function Results() {
 		// Si hay respuesta del backend, úsala para establecer la receta
 		if (respuesta) {
 			setRecipe(respuesta.recipe);
+			// Actualizar UNIUCAMENTE el estado de la receta para guardarla
+			setSaveRecipe(prev => ({
+                ...prev,
+                recipe: respuesta.recipe
+            }));
 		} else {
 			// Si no hay respuesta, usar datos de ejemplo
-			setRecipe({
-				title: "ARROZ CON HUEVO",
-				description:
-					"Una receta rápida y sostenible que aprovecha los ingredientes que tienes a mano. Ideal para una comida ligera y nutritiva mientras esperas que la inspiración (o el internet) regrese.",
-				ingredients: [
-					"1 taza de arroz cocido",
-					"1 huevo",
-					"1/2 taza de vegetales salteados (pueden ser sobras)",
-					"1 cucharada de salsa de soya",
-					"1 diente de ajo picado",
-					"Aceite de oliva al gusto",
-				],
-				instructions: [
-					"Calienta un sartén con un poco de aceite de oliva.",
-					"Agrega el ajo picado y saltéalo por unos segundos hasta que suelte aroma.",
-					"Incorpora los vegetales salteados y remueve por un minuto.",
-					"Agrega el arroz cocido y mezcla bien con los vegetales.",
-					"Haz un espacio en el centro del sartén y rompe el huevo ahí. Revuelve hasta que esté cocido.",
-					"Agrega la salsa de soya y mezcla todo por un par de minutos.",
-					"Sirve caliente y disfruta mientras se termina de cargar el mundo.",
-				],
-				difficulty: "Fácil",
-				time: "10 minutos",
-				servings: "1 persona",
-			});
+            const defaultRecipe = {
+                title: "---",
+                description: "---",
+                ingredients: ["---"],
+                instructions: ["---"],
+                difficulty: "---",
+                time: "---",
+                servings: "---",
+            };
+            setRecipe(defaultRecipe);
+            setSaveRecipe(prev => ({
+                ...prev,
+                recipe: defaultRecipe
+            }));
 		}
 	}, [respuesta]);
 
@@ -73,7 +75,18 @@ export default function Results() {
 			</div>
 		);
 	}
+	const handleSaveRecipe = async (e) => {
+		// Lógica para guardar la receta (puede ser una llamada a una API o almacenamiento local)
+		console.log("Receta mandada a Back:", saveRecipe);
+		try {
+			const response = await api.post("/api/recipe/save", saveRecipe);
+			console.log("Registration successful:", response.data);
+			alert("Receta guardada exitosamente!");
+		} catch (err) {
+			console.error("Registration error:", err);
+		}
 
+	}
 	return (
 		<div className="flex min-h-screen bg-[#FFF4E0]">
 			{/* Barra lateral */}
@@ -166,8 +179,11 @@ export default function Results() {
 								</ol>
 
 								{/* Botón guardar en la esquina superior derecha */}
-								<div className="absolute top-6 right-6">
-									<button className="cursor-pointer bg-[#F18F01] hover:bg-[#E08200] text-white p-2 rounded-lg font-medium transition-colors shadow-md">
+								<div 
+									className="absolute top-6 right-6">
+									<button 
+										onClick={handleSaveRecipe}
+										className="cursor-pointer bg-[#F18F01] hover:bg-[#E08200] text-white p-2 rounded-lg font-medium transition-colors shadow-md">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											className="h-5 w-5"

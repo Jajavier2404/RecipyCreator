@@ -4,7 +4,8 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import ingredientRoutes from './Routes/ingredientRoutes.js';
-import authRoutes from './Routes/authRouts.js';
+import authRoutes from './Routes/authRoutes.js';
+import recipeRoutes from './Routes/recipeRoutes.js';
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use('/api/auth', authRoutes);
 
 // Usamos las rutas definidas
 app.use('/api', ingredientRoutes);
+
+app.use('/api/recipe', recipeRoutes); 
+
 
 const PORT = process.env.PORT || 3000; // Definimos el puerto para el servidor
 app.listen(PORT, () => {
