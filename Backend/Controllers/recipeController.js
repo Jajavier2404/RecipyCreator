@@ -1,9 +1,10 @@
 import { saveRecipe } from '../services/recipeService.js';
 
-export const handleSaveRecipe = async (req, res) => {
+export const handleSaveRecipe = async ( req, res) => {
     try {
-        const { recipe, userId } = req.body;
-
+        const { recipe } = req.body;
+        const userId = req.userId; // lo saca del middleware
+        
         if (!recipe || !userId) {
             return res.status(400).json({ error: 'F4ltan dat0s' });
         }

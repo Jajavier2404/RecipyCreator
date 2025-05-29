@@ -31,16 +31,15 @@ const Login = () => {
 		setError("");
 		try {
 			const response = await api.post("/api/auth/login", formData);
-			const respuestaLogin = response.data
-			const usuario = respuestaLogin.user;
-			
-			// Guardar la información del usuario en localStorage
-			localStorage.setItem('userInfo', JSON.stringify(usuario));
-			// Guarda también el token si lo recibes
-			localStorage.setItem('token', usuario.password);
-			console.log("Login successful:",respuestaLogin);
-			// Save token or user data to local storage/context
-			navigate("/");
+            const { user, token } = response.data; // <--- Desestructurar `user` y `token` de la respuesta del backend
+
+            // Guardar la información del usuario y el TOKEN real en localStorage
+            localStorage.setItem('userInfo', JSON.stringify(user));
+			console.log("User info saved:", user);
+            localStorage.setItem('token', token); // <--- ¡GUARDAR EL TOKEN REAL!
+
+            console.log("Login successful:", response.data);
+            navigate("/");
 		} catch (err) {
 			console.error("Login error:", err);
 			setError("Invalid email or password. Please try again.");

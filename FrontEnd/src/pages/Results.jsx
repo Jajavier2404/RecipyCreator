@@ -6,43 +6,41 @@ import api from "../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Results() {
-  // Estado para ejemplo de receta generada por IA
 	const location = useLocation();
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
-	// Obtener respuesta de la navegación
-	const { respuesta } = location.state || {};
+    const { respuesta } = location.state || {};
 
-	// Estado para la receta
-	const [recipe, setRecipe] = useState(null);
+    const [recipe, setRecipe] = useState(null);
+    const [animated, setAnimated] = useState(false);
 
-	// Estado para la animación de elementos decorativos
-	const [animated, setAnimated] = useState(false);
+    // No necesitas guardar el userId en el estado local del componente para enviarlo,
+    // ya que el backend lo extraerá del token.
+    // Sin embargo, si quieres mostrar el ID del usuario en el frontend o usarlo para lógica
+    // adicional, podrías obtenerlo aquí.
+    const [currentUserId, setCurrentUserId] = useState(null); // Nuevo estado para el userId del usuario logueado
 
-	const [saveRecipe, setSaveRecipe] = useState({
-        userId: 1, //! ID DE EJEMPLO se debe reemplazar por el ID del usuario autenticado
-        recipe: {}
-	});
+    useEffect(() => {
+        setAnimated(true);
+        // Al cargar el componente, intentar obtener el userId del localStorage
+        const userInfoString = localStorage.getItem('userInfo');
+        if (userInfoString) {
+            try {
+                const userInfo = JSON.parse(userInfoString);
+                setCurrentUserId(userInfo.id); // Guardar el ID del usuario
+				console.log("User ID obtenido del localStorage:", userInfo);
+            } catch (e) {
+                console.error("Error parsing userInfo from localStorage", e);
+            }
+        }
+    }, []);
 
-	// Efecto para iniciar animaciones
-	useEffect(() => {
-		setAnimated(true);
-	}, []);
+    useEffect(() => {
+        console.log("Respuesta recibida:", respuesta);
 
-	// Efecto para procesar la respuesta del backend
-	useEffect(() => {
-		console.log("Respuesta recibida:", respuesta);
-
-		// Si hay respuesta del backend, úsala para establecer la receta
-		if (respuesta) {
-			setRecipe(respuesta.recipe);
-			// Actualizar UNIUCAMENTE el estado de la receta para guardarla
-			setSaveRecipe(prev => ({
-                ...prev,
-                recipe: respuesta.recipe
-            }));
-		} else {
-			// Si no hay respuesta, usar datos de ejemplo
+        if (respuesta) {
+            setRecipe(respuesta.recipe);
+        } else {
             const defaultRecipe = {
                 title: "---",
                 description: "---",
@@ -53,40 +51,59 @@ export default function Results() {
                 servings: "---",
             };
             setRecipe(defaultRecipe);
-            setSaveRecipe(prev => ({
-                ...prev,
-                recipe: defaultRecipe
-            }));
-		}
-	}, [respuesta]);
+        }
+    }, [respuesta]);
 
-	// Manejar la búsqueda de otra receta
-	const handleNewSearch = () => {
-		navigate("/");
-	};
+    const handleNewSearch = () => {
+        navigate("/");
+    };
 
-	// Si no hay receta, mostrar un mensaje de carga
-	if (!recipe) {
-		return (
-			<div className="flex h-screen bg-[#FFF4E0] items-center justify-center">
-				<div className="text-center">
-					<p className="text-xl text-[#295F4E]">Cargando receta...</p>
-				</div>
-			</div>
-		);
-	}
-	const handleSaveRecipe = async (e) => {
-		// Lógica para guardar la receta (puede ser una llamada a una API o almacenamiento local)
-		console.log("Receta mandada a Back:", saveRecipe);
-		try {
-			const response = await api.post("/api/recipe/save", saveRecipe);
-			console.log("Registration successful:", response.data);
-			alert("Receta guardada exitosamente!");
-		} catch (err) {
-			console.error("Registration error:", err);
-		}
+    const handleSaveRecipe = async () => { 
+        // Asegúrate de que haya una receta para guardar y un userId disponible
+        if (!recipe) {
+            alert("No hay una receta para guardar.");
+            return;
+        }
 
-	}
+        // Si currentUserId es nulo, significa que el usuario no está logueado o el ID no se pudo obtener
+        if (!currentUserId) {
+            alert("Debes iniciar sesión para guardar recetas.");
+            navigate("/login"); // Redirige al login si no hay usuario
+            return;
+        }
+
+        console.log("Receta a enviar al Back:", recipe); // Solo necesitas enviar el objeto 'recipe'
+
+        try {
+            // El userId no se envía directamente en el body.
+            // Tu backend lo extraerá del token que se envía automáticamente por el interceptor de Axios.
+            const response = await api.post("/api/recipe/save", { recipe });
+            console.log("Receta guardada exitosamente:", response.data);
+            alert("Receta guardada exitosamente!");
+        } catch (err) {
+            console.error("Error guardando receta:", err.response ? err.response.data : err.message);
+            // Mostrar un mensaje de error más específico al usuario
+            if (err.response && err.response.status === 401) {
+                alert("Necesitas iniciar sesión para guardar recetas. Redirigiendo al login.");
+                navigate("/login");
+            } else if (err.response && err.response.data && err.response.data.error) {
+                alert("Error al guardar receta: " + err.response.data.error);
+            } else {
+                alert("Error interno al guardar la receta. Por favor, inténtalo de nuevo.");
+            }
+        }
+    };
+
+    if (!recipe) {
+        return (
+            <div className="flex h-screen bg-[#FFF4E0] items-center justify-center">
+                <div className="text-center">
+                    <p className="text-xl text-[#295F4E]">Cargando receta...</p>
+                </div>
+            </div>
+        );
+    }
+
 	return (
 		<div className="flex min-h-screen bg-[#FFF4E0]">
 			{/* Barra lateral */}
