@@ -198,7 +198,7 @@ const Home = () => {
                 {/* Features Section - Mayor espaciado y padding */}
                 <section className="py-24 px-8 bg-white shadow-[0_0_3px_0.2px] shadow-[#e5d4b3]">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-16">Why Ecorecipe?</h2>
+                        <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-16">Porque Ecorecipe?</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                             {features.map((feature, index) => (
@@ -220,9 +220,9 @@ const Home = () => {
                 {/* Popular Recipes Section - Mayor espaciado y padding */}
                 <section className="py-24 px-8 bg-[#FFF4E0]">
                     <div className="max-w-7xl mx-auto">
-                        <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-4">Popular Recipes</h2>
+                        <h2 className="text-4xl font-bold text-center text-[#295F4E] mb-4">Recetas Populares</h2>
                         <p className="text-center text-xl text-[#295F4E]/80 mb-16 max-w-2xl mx-auto">
-                            Explore our most loved recipes that are quick and easy to make
+                            Explora nuestras recetas más queridas que son rápidas y fáciles de hacer.
                         </p>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -273,12 +273,12 @@ const Home = () => {
                     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
                         <div className="mb-8 md:mb-0">
                             <h2 className="text-3xl font-bold text-[#F18F01]">Ecorecipe</h2>
-                            <p className="text-white/70 mt-2 text-lg">Cook smart, waste less</p>
+                            <p className="text-white/70 mt-2 text-lg">Cocina mejor, desperdicia menos.</p>
                         </div>
 
                         <div className="text-center md:text-right">
                             <p className="text-[#F18F01] text-lg">© 2025 Ecorecipe App - Javier Gomez</p>
-                            <p className="text-white/70 text-base mt-2">Transforming ingredients into delicious meals</p>
+                            <p className="text-white/70 text-base mt-2">De lo básico a lo exquisito</p>
                         </div>
                     </div>
                 </footer>

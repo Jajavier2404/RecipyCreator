@@ -57,21 +57,21 @@ const UserProfile = () => {
         <div className="fixed top-4 right-10 z-50" ref={dropdownRef}>
             {/* Contenedor principal con posición fija y sticky */}
             <div 
-                className="flex items-center gap-3 p-3 rounded-lg bg-[#3D7A5E] hover:bg-[#295F4E] cursor-pointer transition-all duration-200 group"
+                className="flex items-center gap-3 p-3 rounded-lg bg-[#3D7A5E] hover:bg-[#295F4E] transition-all duration-200 group"
             >
                 {/* Información del usuario */}
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-semibold text-white truncate">{user.name}</p>
-                                    <p className="text-xs text-gray-300 truncate">{user.email}</p>
-                                </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">{user.name}</p>
+                    <p className="text-xs text-gray-300 truncate">{user.email}</p>
+                  </div>
                                 
-                                {/* Icono de usuario */}
-                                <FaUser className="text-gray-400 text-sm group-hover:text-[#F18F01] transition-colors duration-200" />
+                  {/* Icono de usuario */}
+                  <FaUser className="text-gray-400 text-sm group-hover:text-[#F18F01] transition-colors duration-200" />
                 <div
                     className="w-15 h-15 rounded-full bg-gradient-to-br from-[#F18F01] to-[#50B88C] flex items-center justify-center cursor-pointer shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl"
                     onClick={() => setIsOpen(!isOpen)} // Cambia el estado al hacer clic
                 >
-                    <span className="text-white font-semibold text-[20px]">{initials}</span>
+                    <span className="cursor-pointer text-white font-semibold text-[20px]">{initials}</span>
                     
                 </div>
             </div>
