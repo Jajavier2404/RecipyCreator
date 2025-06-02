@@ -3,7 +3,7 @@ import { X, Clock, Users, ChefHat, Heart, Star, Bookmark, Printer } from "lucide
 export default function RecipeModal({ recipe, isOpen, onClose }) {
     if (!isOpen || !recipe) return null;
 
-    // Datos de ejemplo para mostrar el modal
+    // Datos de ejemplo para mostrar el modal (solo como fallback)
     const mockRecipe = {
         id: 1,
         title: "Paella Valenciana Tradicional",
@@ -12,39 +12,43 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
         time: "45 min",
         difficulty: "Intermedio",
         servings: 6,
-        rating: 4.8
+        rating: 4.8,
+        ingredients: [
+            "400g de arroz bomba",
+            "1 pollo troceado",
+            "200g de judías verdes",
+            "200g de garrofón",
+            "150g de tomate rallado",
+            "Azafrán en hebras",
+            "Aceite de oliva virgen extra",
+            "Sal y pimentón dulce"
+        ],
+        instructions: [
+            "Calentar el aceite en la paellera y dorar el pollo troceado hasta que esté bien dorado por todos los lados.",
+            "Añadir las judías verdes y el garrofón, rehogar durante 5 minutos removiendo ocasionalmente.",
+            "Incorporar el tomate rallado y el pimentón dulce, sofreír durante 2 minutos sin que se queme.",
+            "Agregar el arroz bomba y el azafrán disuelto en un poco de caldo caliente, mezclar bien.",
+            "Verter el caldo caliente (aproximadamente el doble de volumen que el arroz) y cocer durante 20 minutos a fuego medio.",
+            "Dejar reposar la paella durante 5 minutos antes de servir para que termine de absorber los líquidos."
+        ]
     };
 
     const displayRecipe = recipe || mockRecipe;
 
-    // Datos extendidos de la receta
-    const extendedRecipeData = {
-        1: {
-            ingredients: [
-                "400g de arroz bomba",
-                "1 pollo troceado",
-                "200g de judías verdes",
-                "200g de garrofón",
-                "150g de tomate rallado",
-                "Azafrán en hebras",
-                "Aceite de oliva virgen extra",
-                "Sal y pimentón dulce"
-            ],
-            instructions: [
-                "Calentar el aceite en la paellera y dorar el pollo troceado hasta que esté bien dorado por todos los lados.",
-                "Añadir las judías verdes y el garrofón, rehogar durante 5 minutos removiendo ocasionalmente.",
-                "Incorporar el tomate rallado y el pimentón dulce, sofreír durante 2 minutos sin que se queme.",
-                "Agregar el arroz bomba y el azafrán disuelto en un poco de caldo caliente, mezclar bien.",
-                "Verter el caldo caliente (aproximadamente el doble de volumen que el arroz) y cocer durante 20 minutos a fuego medio.",
-                "Dejar reposar la paella durante 5 minutos antes de servir para que termine de absorber los líquidos."
-            ]
-        }
-    };
+    // Usar directamente los datos de la receta recibida, con fallback al mock
+    const recipeIngredients = displayRecipe.ingredients && displayRecipe.ingredients.length > 0 
+        ? displayRecipe.ingredients 
+        : mockRecipe.ingredients;
+    
+    const recipeInstructions = displayRecipe.instructions && displayRecipe.instructions.length > 0 
+        ? displayRecipe.instructions 
+        : mockRecipe.instructions;
 
-    const recipeDetails = extendedRecipeData[displayRecipe.id] || {
-        ingredients: ["Ingredientes no disponibles"],
-        instructions: ["Instrucciones no disponibles"]
-    };
+    // Asegurar que tenemos un rating válido
+    const recipeRating = displayRecipe.rating || 4.5;
+    
+    // Asegurar que tenemos servings válido
+    const recipeServings = displayRecipe.servings || 4;
 
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
@@ -60,7 +64,7 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
                     </button>
                     
                     <div className="text-center">
-                        <h1 className="text-3xl md:text-4xl font-bold text-[#295F4E] mb-2">
+                        <h1 className="text-3xl md:text-4xl font-moodcake text-[#295F4E] mb-2">
                             Detalles de la Receta
                         </h1>
                         <p className="text-[#A63D40] text-sm">
@@ -81,20 +85,9 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
                                 {/* Bloque del título */}
                                 <div className="bg-[#295F4E] rounded-lg shadow-md p-6 border border-[#295F4E]/20">
                                     <div className="flex items-center justify-center gap-4 mb-2">
-                                        <div className="text-4xl">{displayRecipe.image}</div>
-                                        <h2 className="text-2xl md:text-3xl text-center text-white font-bold uppercase">
+                                        <h2 className="text-2xl md:text-3xl text-center text-white font-moodcake uppercase">
                                             {displayRecipe.title}
                                         </h2>
-                                    </div>
-                                    
-                                    {/* Rating */}
-                                    <div className="flex items-center justify-center gap-2 mt-3">
-                                        <div className="flex items-center gap-1">
-                                            {[...Array(5)].map((_, i) => (
-                                                <Star key={i} className={`w-4 h-4 ${i < Math.floor(displayRecipe.rating) ? 'text-[#F18F01] fill-[#F18F01]' : 'text-white/50'}`} />
-                                            ))}
-                                        </div>
-                                        <span className="text-white/90 font-semibold">{displayRecipe.rating}</span>
                                     </div>
                                 </div>
 
@@ -113,7 +106,7 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
                                         </span>
                                         <span className="bg-[#50B88C]/10 text-[#295F4E] px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-1">
                                             <Users className="w-4 h-4" />
-                                            {displayRecipe.servings} personas
+                                            {recipeServings} personas
                                         </span>
                                         <span className="bg-[#A63D40]/10 text-[#A63D40] px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-1">
                                             <ChefHat className="w-4 h-4" />
@@ -128,7 +121,7 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
                                         Ingredientes
                                     </h3>
                                     <ul className="space-y-3">
-                                        {recipeDetails.ingredients.map((ingredient, index) => (
+                                        {recipeIngredients.map((ingredient, index) => (
                                             <li key={index} className="flex items-start gap-3 group hover:bg-[#F18F01]/5 p-2 rounded-lg transition-colors duration-200">
                                                 <span className="inline-block bg-[#F18F01]/20 w-5 h-5 rounded-full flex-shrink-0 mt-1 group-hover:bg-[#F18F01]/30 transition-colors duration-200"></span>
                                                 <span className="text-gray-700">{ingredient}</span>
@@ -145,16 +138,8 @@ export default function RecipeModal({ recipe, isOpen, onClose }) {
                                     <h3 className="text-xl font-bold text-[#295F4E] mb-6">
                                         Preparación
                                     </h3>
-                                    
-                                    {/* Botón guardar en la esquina superior derecha */}
-                                    <div className="absolute top-6 right-6">
-                                        <button className="bg-[#F18F01] hover:bg-[#E08200] text-white p-2 rounded-lg font-medium transition-colors shadow-md hover:scale-110 transform duration-200">
-                                            <Bookmark className="h-5 w-5" />
-                                        </button>
-                                    </div>
-
                                     <ol className="space-y-4">
-                                        {recipeDetails.instructions.map((step, index) => (
+                                        {recipeInstructions.map((step, index) => (
                                             <li key={index} className="flex gap-4 group hover:bg-[#50B88C]/5 p-3 rounded-lg transition-colors duration-200">
                                                 <span className="bg-[#50B88C]/20 w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-[#295F4E] text-sm group-hover:bg-[#50B88C]/30 group-hover:scale-110 transition-all duration-200">
                                                     {index + 1}
