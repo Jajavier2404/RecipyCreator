@@ -23,4 +23,14 @@ api.interceptors.request.use(
     }
 );
 
+export const getFavoriteRecipes = async () => {
+    try {
+        const response = await api.get('/api/recipe/favorites');
+        return response.data;
+    } catch (error) {
+        console.error('Error obteniendo recetas favoritas:', error);
+        throw error;
+    }
+};
+
 export default api;

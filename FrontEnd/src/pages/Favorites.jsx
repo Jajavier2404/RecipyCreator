@@ -3,25 +3,34 @@ import { ChevronLeft, ChevronRight, ArrowRight, Heart } from "lucide-react";
 import SideBar from "../components/SideBar/SideBar";
 import RecipeModal from "../components/modal"; // Import the modal component
 import { useNavigate } from 'react-router-dom';
-
+import { getFavoriteRecipes } from '../services/api';
 
 export default function Favorites({ recipes }) {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Set to true for demo
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const [user, setUser] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Manejador de estado para saber si el usuario está logueado
+    const [currentIndex, setCurrentIndex] = useState(0);// Saber el índice actual del carrusel
+    const [isAnimating, setIsAnimating] = useState(false);// Manejador de estado para saber si el carrusel está animando
+    const [user, setUser] = useState(null);// Manejador de estado para el usuario mediante localStorage
     const [isLoading, setIsLoading] = useState(true); // Estado de carga
+
     // Modal state
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+    //------------
+
+    //Manejador de Estado para las recetas traidas del backend
+    const [backendRecipes, setBackendRecipes] = useState([]);
+    const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
+    //------------
+
+    // Valores por defecto para el usuario y recetas
     const defaultUser = {
         initials: 'NA',
-        name: 'Juan Antonio',
-        gmail: 'juan.antonio@email.com',
+        name: 'Desconocido',
+        gmail: 'Desconocido123@email.com',
     };
 
+    // Valores por defecto para las recetas (SE DEBE BORRAR CUANDO SE TENGA EL BACKEND)
     const defaultRecipes = [
         { 
             id: 1, 
@@ -73,13 +82,44 @@ export default function Favorites({ recipes }) {
         },
     ];
 
-    const currentRecipes = recipes || defaultRecipes;
+    // Funcion que carga las recetas del backend
+    const loadFavoriteRecipes = async () => {
+        if (!isLoggedIn || !user) return;
+        
+        setIsLoadingRecipes(true);
+        try {
+            const recipes = await getFavoriteRecipes();
+            
+            // Mapear las recetas del backend al formato que espera el frontend
+            const formattedRecipes = recipes.map(recipe => ({
+                id: recipe.id,
+                title: recipe.title,
+                description: recipe.description,
+                image: '❤️', // Emoji por defecto para favoritos
+                difficulty: recipe.difficulty,
+                time: recipe.time,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions,
+                servings: recipe.servings,
+                createdAt: recipe.createdAt
+            }));
+            
+            setBackendRecipes(formattedRecipes);
+        } catch (error) {
+            console.error('Error cargando recetas favoritas:', error);
+            // En caso de error, usar recetas por defecto
+            setBackendRecipes(defaultRecipes);
+        } finally {
+            setIsLoadingRecipes(false);
+        }
+    };
+    const currentRecipes = isLoadingRecipes ? [] : (backendRecipes.length > 0 ? backendRecipes : defaultRecipes);
     const recipesPerView = 3;
     // Calcular el número total de páginas/grupos
     const totalPages = Math.ceil(currentRecipes.length / recipesPerView);
     const maxIndex = Math.max(0, totalPages - 1);
 
-    // Modal functions
+    //------- FUNCIONES DE LA MODAL -------
     const openModal = (recipe) => {
         setSelectedRecipe(recipe);
         setIsModalOpen(true);
@@ -117,7 +157,8 @@ export default function Favorites({ recipes }) {
         setCurrentIndex(index);
         setTimeout(() => setIsAnimating(false), 300);
     };
-
+    //-----------------------------------
+    
     const handleClickLogin = async (e) => {
         navigate('/login');
     };
@@ -151,6 +192,13 @@ export default function Favorites({ recipes }) {
         loadUserData();
     }, []);
 
+    // useEffect para cargar recetas cuando el usuario esté listo
+    useEffect(() => {
+        if (isLoggedIn && user && !isLoading) {
+            loadFavoriteRecipes();
+        }
+    }, [isLoggedIn, user, isLoading]);
+
     // Efecto separado para el carousel automático
     useEffect(() => {
         if (isLoading) return; // No iniciar carousel hasta que los datos estén cargados
@@ -181,7 +229,6 @@ export default function Favorites({ recipes }) {
         );
     }
     
-    // AQUÍ ESTÁ EL PROBLEMA ARREGLADO: Verificar que user no sea null antes de acceder a sus propiedades
     const userName = user?.name || user?.email?.split('@')[0] || 'Usuario';
     const initials = user && userName
         ? userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
